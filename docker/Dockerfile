@@ -58,7 +58,16 @@ ENV PATH="/home/appuser/.local/bin:${PATH}"
 # To install pip package installer for python
 RUN wget https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm get-pip.py
 
+# To clone custom HR-VITON repository if CLONE_REPO=1
 ARG CLONE_REPO=1
+RUN if [ '${CLONE_REPO}' = 1 ]; then git clone https://github.com/sohaibwaheedgithub/HR-VITON-CUSTOM.git HR-VITON-Custom; fi
+
+# To change working dir to HR-VITON-Custom
+WORKDIR /home/appuser/HR-VITON-Custom
+
+# To install requirements
+RUN pip install -r requirements.txt
+
 
 
 
