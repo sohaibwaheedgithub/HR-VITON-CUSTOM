@@ -1,0 +1,350 @@
+Thin Plate Spline (TPS):
+    - Mathematical transformation model
+    - To perform non-linear transformation or warping or deformation
+    - Consist of some parameters that are used to perform transformation
+    - These parameters are estimated using different techniques
+    - Warping modules based on it have a limited degree of freedom
+
+
+Pixel-Squeezing Artifacts:
+    - The excessive warping near the clothing regions occluded by the body parts.
+    - Due to the lack of information exchange between the warping and segmentation map
+
+
+Conditional Normalization:
+    - Whose affine parameters are estimated with external data
+
+
+Image-to-Image Translation:
+    - Converting an image from one domain into another while preserving it's essential visual content
+
+
+Coarse-To-Fine:
+    - Strategy in which a problem is solved initially with coarse or less detailed solution and it refines its
+      solution iteratively to improve it's accuracy and precision.
+
+
+Random Sample Consensus (RANSAC):
+    - Statistical algorithm to select the best model
+    - Randomly selects a sample of data points and fits every model and detect it's number of inliers.
+    - Repeat this process.
+    - The model with most number of inliers is the best
+
+
+Hough Voting Or Hough Transform:
+    - Technique to detect geometric shapes within an image (e.g lines, circles etc)
+    - Hough line transform, Hough circle transform
+
+
+Interpolation:
+    - The insertion of something of a differnet nature into something else
+
+
+Eigen Vector:
+    - A vector whose direction doesn't change
+    - if "A" is a square matrix and "v" is a non zero vector
+      then: Av = lambda x v; "v" is the eigen vector of A
+      where lambda is the eigen value associated with the eigen vector "v"
+
+
+Rhombus"
+    - Quadrilateral with equal sides
+
+
+Perspective View:
+    - A way of representing a 3 dimensional object or surface in a 2d plane such that it gives the sense of
+      depth and spatial relationship
+
+
+Spline:
+    - A type of mathematical function used to interpolate or approximate a set of data points.
+
+
+Point-Correspondence:
+    - Pair of points in two different sets of data that corresponds to the same location or feature in some way.
+
+
+
+Dirac Delta Distribution:
+    - A generalized function or distribution which is zero eveywhere on the number line except at zero.
+    - Whose integral over the entire number line is equal to 1.
+    - Aka Unit Impulse function.
+
+ 
+Thin Steel Plate Equation:
+    - Equation for the thin steel plate, lofted as a function z(x, y) = r^2logr^2, (where r = sqrt(x^2 + y^2)) above 
+      the (x, y) plane is:
+             delta^2.U = 0; where U = z(x, y)
+
+
+Central Angle:
+    - angle between two line segments (radii) drawn inside a circle from it's center to any two points on 
+      it's circumference.
+
+
+Asymptotically:
+    - Continously approach a point, level, value etc, without ever reaching it.
+
+
+One-to-One Function:
+    - Aka Injective function
+    - Every element from codomain is the image of atmost one element from it's domain
+
+
+Onto Function:
+    - Aka Surjective function
+    - Every element from codomain is the image of atleast one element from it's domain
+
+
+Bijective Function:
+    - If a function is both injective and surjective.
+
+
+
+Diffeomorphism:
+    - A smooth and bijective function or mapping between two spaces that preserves smoothness and has a smooth 
+      two way transformation (smooth inverse).
+
+
+Euclidean Plane:
+    - Two dimensional flat space where points are represented using a pair of coordinates (x, y)
+    - Aka Cartesian Coordinate system.
+
+
+Note: If V is a row vector of dimensions (1 x n) such that V = (v1, v2, ..... vn) than the notation Y = (V|0 0 0)^T
+      means that Y is a column vector (^T) by three zeros appended to it. So Y = (v1, v2, ...., vn, 0, 0, 0)
+      and dimensions of Y is (n+3 x 1)
+
+
+2D Deformation Field:
+    - A vector field or displacement field, which describes how the pixels in a image change or deform.
+      In other words, describes the displacement or movement of pixels in the transformed image.
+    - Helps to model the spatial transformation between two images, enabling the transformation of one 
+      image to match the other.
+
+
+
+Note: It is possible to Predict Depth And Normal Surface using CNN.
+
+
+Note: Perceptual difference between two images is the dicrepencies and differences in these two images as percieved by 
+a human observer.
+
+
+Feature Inversion:
+    - To reverse engineer the internel feature representations of a neural network and reconstruct or synthesize the 
+    input image with the maximum activation of desired features
+
+
+Perceptual Loss:
+    - Calculated between the high-level feature representations of pretrained networks
+    on output and ground truth images.
+
+
+Segmentation Fault (core dumped):
+    - An error in C/C++ when the program attempts to access the location in memory which it does not has
+      permission to access.
+    - SegFault for short
+    - Core Dumped refers to the recording of the state of the program i.e it's resources in memory and processor.
+    - Trying to access non-existent memory or memory which is being used by other processes also causes 
+      the Segmentation Fault which leads to a core dump
+
+
+Zero-Sum Game:
+    - Game Theory concept
+    - In which the loss of the losing side is equal to the gain of the winning side.
+    - E.g Table Tennis, Chess, one wins and one lose
+
+
+Nash Equilibrium:
+    - Game Theory concept
+    - Decision making theorem
+    - Player can achieve the desired outcome by sticking to or not deviating from his initial strategy
+    - E.g., a predator chases its prey, the prey tries to escape, and neither would be better off changing their strategy.
+
+
+
+Difficulties In Training GANs:
+    Mode Collapse:
+        - When the generator's output gradually becomes less diverse.
+        - For example if GAN is being trained on Fashion Mnist dataset and it learns to trick the discriminator in generating fake shoes images.
+        Once it notices that the discriminator is getting tricked with shoes images, it may start to produce all shoes images and forgets
+        about other classes. Similarly the discriminator tries to only discriminate between fake shoes and real shoes and forgets about
+        other classes, and when the training reaches Nash Equilibrium i.e the generator generates all realistic fake shoes and the discriminator
+        tells 50 % fake and 50 % real, then the generator is forced to focus on other class (e.g shirt), and the same process starts again
+        and both generator and discriminator forgets about the previous class i.e shoes. So eventually, both doesn't perform accurately
+        at any of the classes.
+    
+    - The discriminator and generator constantly push against each other so their parameters may end up oscillating and becoming unstable.
+
+    - When updating the generator, the binary cross-entropy loss function will cause the problem of vanishing gradients for the samples
+      that are on the correct side of the decision boundary, but are still far from the real data. 
+
+      
+Some Solution Techniques For Above Problems:
+    Experience Replay:
+        - Consists in storing the images produced by the generator at each iteration in a replay buffer (gradually dropping older generated 
+          images) and training the discriminator using real images plus fake images drawn from this buffer (rather than just fake
+          images produced by the current generator). This reduces the chances that the discriminator will overfit the 
+          latest generator’s outputs.
+    
+    Mini-Batch Discrimination:
+        - It measures how similar images are across the batch and provides this statistic to the discriminator, so it can easily reject 
+        a whole batch of fake images that lack diversity. This encourages the generator to produce a greater variety of images, 
+        reducing the chance of mode collapse.
+
+    - Specific Architectures that happen to perform well
+
+
+
+
+Least Square GANs (LSGANs):
+    - In which least sqaures loss function is used for discriminator instead of binary cross-entropy loss.
+
+
+Note: ∼ means "drawn from" or "distributed according to. E.g x∼p<sub>z</sub>(x), means x is drawn from the distribution p<sub>z</sub>(x)
+
+
+A-B Coding Scheme:
+    - Aka Differential Manchestor Encoding or Biphase-Level Encoding
+    - Method used in digital telecommunication for data transmission
+    - A type of line code where each bit of data is represented by a transition in the signal rather than by signal level itself
+    - E.g  __---__------__---_________--- where high level represents 1 and low represents 0
+
+
+Modalities:
+    - Different types or models of data that can be used as input to train the model
+    - E.g Text, Audio, Video, Image etc
+
+
+Conditional GANs:
+    - In which in addition to the prior input, an auxiliary data input (say "y") from different modalities is also given
+      to both generator and discriminator
+
+
+Multi-Modal Model:
+    - Which is trained on multiple modalities simultaneously
+
+
+PatchGAN:
+    - Whose discriminator processes on N x N patches of the input image instead of whole
+    - The discriminate tries to predict whether a region (patch) of an image is fake or real.
+    - This is to restrict the discriminator to model only the high-frequency structure, (we can rely on an L1 term (loss) to force 
+      low-frequency correctness)
+    - It is run convolutionally across the image, averaging all responses to get the final output
+    - If N = 1, it becomes PixelGAN
+    - If whole image is given as input to the discriminator, it becomes ImageGAN
+
+
+Multiscale-Discriminator:
+    - More than one discriminators, each for different scale of input image
+
+
+Markove Random Field:
+    - A probabilistic graphical model used to represent complex probability distribution over a set of random variables.
+
+
+Instance Normalization:
+    - Process one instance in a batch at a time
+    - Normalizes spatially
+    - This has been proven effective in image generation tasks
+
+
+Note: Normalization layer tend to wash away sementic information
+
+Side Note: To modulate something means to change or vary it's characteristics in a controlled manner according to a specific pattern or purpose
+
+Side Note: "Seminal work" refers to highly influential, original, or groundbreaking contributions within a particular field or discipline
+
+
+Unconditional Normalization Layer:
+    - Do not depend on external data
+    - Examples; Batch Normalization, Instance Normalization, Local Response Normalization,
+    Layer Normalization, Weight Normalization, Group Normalization etc
+
+Conditional Normalization Layer:
+    - Requires external data
+    - Uses external data to denormalize the normalized activations. The denormalization part is conditional
+    - Generally operates as follows. First layer activations are normalized to zero mean and unit standard deviation (i.e Standard Scaling)
+    Then the normalized activations are denormalized by modulating the activations using affine transformation whose parameters are
+    inferred from external data.
+    - Examples; Conditional Batch Normalization, Adaptive Instance Normalization (AdaIN), Spatially Adpative (DE)Normalization (SPADE)
+
+
+Affine Transformation:
+    - Linear transformation
+    - Type of geometric transformation
+    - Mapping points while preserving properties such as parallelism, straightness and ratios of distances along lines.
+
+
+Note:  InstanceNorm tend to wash away semantic information when applied to uniform or flat segmentation masks 
+       Let us assume that a segmentation mask with a single label is given as input to the module (e.g., all the
+       pixels have the same label such as sky or grass). Under this
+       setting, the convolution outputs are again uniform, with different labels having different uniform values. Now, after we
+       apply InstanceNorm to the output, the normalized activation
+       will become all zeros no matter what the input semantic label is given
+
+
+Spectral Normalization: Have to read the paper 
+
+
+Note: Variational Auto-Encoder is also a generative model
+
+
+Side Note: Could search these topics later; 
+           Jensen-Shannon divergence, 
+           Maximum Mean Discrepancy objective
+
+
+Variants Of GANs:
+    - Wasserstein GAN: Introduced the weight clipping
+
+
+Side Note: Support of a probability distribution denoted as supp(pd) (where pd is probability distribution) is a set of all possible values of a random variable
+for which pd is non-zero
+    
+
+Training a discriminator to completely minimize it's own loss (i.e the discriminator has been fully trained and it's loss is now 0) yields
+
+since discriminator is given an equally divided data between real and fake images during training, So (an ideal discriminator must output 
+a probability of 0.5 over the batch during training)
+
+We can write it as
+D*(x) = P(real|x)   (this will be 0 if x is fake and 1 otherwise)   Note D*(x) is for ideal discriminator
+      = P(real (intersection) x) / P(real (intersection) x) + P(fake (intersection) x)  (according to bayes' theorem)
+      Since we know that; 
+      - P(A (intersection) B) = P(A)P(B|A)
+      - Also the distribution given as input to the discriminator contains equal no of instances from each distribution so pmix(x) = 1/2 pd(x) + 1/2 pg(x)
+        and pmix(x) = P(real (intersection) x) + P(fake (intersection) x)
+      therefore;
+      = P(real)P(x|real) / pmix(x)
+      = P(real)P(x|real) / 1/2 pd(x) + 1/2 pg(x)
+      Since we know that;
+      - P(real) = 1/2
+      - P(x|real) = pd(x)
+      therefore;
+      = 1/2 pd(x) / 1/2 pd(x) + 1/2 pg(x)    
+
+D*(x) = pd(x) / pd(x) + pg(x) -- eq(1)
+
+we also know that the discriminator's output is also equal to;
+D*(x) = 1 / 1 + e^(-D`*(x)) -- eq(2)         where D`*(x) is logits
+therefore;
+we can compare eq(1) and eq(2)
+1 / 1 + e^(-D`*(x)) = pd(x) / pd(x) + pg(x)
+after simplification
+pd(x) / pg(x) = e^(D`*(x))
+
+since we also know that
+M = max (pd(x) / pg(x))
+M = max (e^(D`*(x)));  but in practice we donot calculate M this way, we take out a bunch of pd(x) and pg(x) to estimate pd(x) / pg(x)
+
+Discriminator Rejection Sampling:
+    - if M = max(pd(x*) / pg(x*)) for some x (denoted here as x*)
+    - then M.pg(x) > pd(x) for all x
+    - we accept the sample if pd(x) / M.pg(x) is greater than some threshold and reject otherwise
+    - in terms of training implementation
+      Paccept = D(x) / M(1 - D(x))
+
+
+      

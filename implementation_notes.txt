@@ -1,0 +1,55 @@
+Condition Generator
+- remember to rescript parse_agnostic script and it's ids accordingly
+
+- change the code for loading image_parse according to the dataset
+
+- change segmentation ids in tf.logical_or in utils.CG_PostProcessing.occlusion_handler
+
+- change the indices of replay buffers and fake segmentation masks when changing the batch_size
+
+- change generator_fake_ids on line 57 of train_condition_generator.py when changing the batch size
+
+- Try increasing the dropout rate of first dropout layer in discriminator.
+
+- Try setting different receptive fields 
+
+- Must try setting use_bias to False in discriminator in layers preceding Instance Normalization layers
+
+- Must try application of batch normalization on scaled_input before adding to bn_layer2 in resblock
+
+- remember to split dataset before original training
+
+- remember to change discriminators inputs shape before original training
+
+- must generate generator fake ids according to changed disc output in line 60
+
+- must include validation code in training loop
+
+
+
+Image Generator
+- make to sure to keep the range between 0-255
+
+- Can try using leaky relu instead in pre_conv                                                priority: lowest
+
+- Can try removing image enocder                                                              priority: low
+
+- Must try replacing ResBlock with SPADE ResBlock                                             priority: medium
+ 
+- Can try concatenating fused_input before activation                                         priority: medium
+
+- Try applying spectral normalization to generator's convolutional layers                     priority: low
+
+- Can try changing number of patches and resizing images in discriminator preprocessor        priority: medium
+
+- Upload part of code of mod_evaluate_parsing_JPPNet-s2-copy.py on paperspace                 priority: Highest
+
+- Upload part of code of data_preparation_preprocessing.py on paperspace                      priority: Highest
+
+- Remember to split dataset before original training                                          priority: Highest
+
+- must include validation code in training loop                                               priority: Highest
+
+- Change figure rows and columns according to original dataset size
+
+- Can try changing axis to -1 in BatchNormalization in SpatiallyAdpativeNormalization         priority: Medium
