@@ -68,9 +68,6 @@ WORKDIR /home/appuser/HR-VITON-Custom
 # To install requirements
 RUN pip install -r requirements.txt
 
-
-
-
-
-
-
+# Downloading model checkpoints from google drive
+RUN mkdir models
+WORKDIR /models
