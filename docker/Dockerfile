@@ -1,73 +1,35 @@
-# Defining base image
-FROM ubuntu:18.04
+FROM nvcr.io/nvidia/rapidsai/rapidsai:23.06-cuda11.8-runtime-ubuntu22.04-py3.10
 
-# Setting environment variable DEBIAN_FRONTEND to noninteractive to avoid interactive prompts during package installation when using 
-# APT (Advanced Package Tool, The package manager  for debian based system)
-ENV DEBIAN_FRONTEND noninteractive
+USER root
 
-# For ensuring that the apt package list is up to date and for installing required packages
-# ca-certificates contains a set of trusted certificate autorities that is used by the operating system and various applocations to establish the
-# authenticity of SSL/TLS connections
-# SSL (Secure Sockets Layer) and its successor TLS (Transport Layer Security) are cryptographic protocols used to secure communication over a network.
-# They establish an encrypted connection between a client and a server, ensuring that the data transmitted between them remains confidential and integral
-RUN apt-get update && apt-get install -y python3.8 python3.8-dev python3.8-distutils ca-certificates python3-dev python3-opencv git wget unzip
+# Set our locale to en_US.UTF-8.
+ENV LANG en_US.UTF-8
+ENV LC_CTYPE en_US.UTF-8
 
-# update-alternative is a system in linux for managing multiple versions of the same software package
-# update-alternatives --install ------- to add a new alternative for a particular command/tool
-# /usr/bin/python3              ------- symbolic link of the command for which alternative is being added
-# python3                       ------- name of the command for which alternative is being added
-# /usr/bin/python3.8            ------- symbolic link of the alternative
-# 1                             ------- priority of the alternative
-RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1
-
-# To add a new user
-# Can be USER_ID value can be provided explicitly when running the container
-ARG USER_ID=1000
-# useradd           ------- to add a user 
-# -m                ------- to create user's home directory if it doesn't exist
-# --no-log-init     ------- to prevent the creation of log file containing the initial log session for the user
-# --system          ------- means that the user is a system user add it won't have a home dir by default
-# --uid ${USER_ID}  ------- to assgin the id to the user
-# appuser           ------- user name
-# -g sudo           ------- to assign user a group "sudo", which means it will have administrative privileges
-RUN useradd -m --no-log-init --system --uid ${USER_ID} -g sudo
-
-# To allow sudoers (sudo group users) to run any command as any user without providing any password
-# echo                            ------- appends line to the end of the file and also used to display command to a terminal
-# '%sudo ALL=(ALL) NOPASSWD:ALL'  ------- %sudo refers to the sudo group and "ALL=(ALL) NOPASSWD:ALL" configuration of the sudo group. Here
-#                                         to allow sudoers to run any command as any user without providing any password
-# >>                              ------- to point to the file to which the line is to appended
-# /etc/sudoers                    ------- filepath to which the line is to appended
-RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-
-# To specify the user context under which subsequent commands will run
-USER appuser
-
-# To set the working directory
-WORKDIR /home/appuser
-
-# To set the PATH environment variable
-# extends the current PATH variable by adding "/home/appuser/.local/bin" to the begining of the current PATH value
-# It allows executables located in "/home/appuser/.local/bin" to be found and executed directly from the command line 
-# without specifying the full path 
-# This modification to the PATH environment variable ensures that any executables installed locally for the appuser within the .local/bin directory 
-# are easily accessible without specifying their full path every time. This can be useful when installing user-specific tools or applications within 
-# the container.
-ENV PATH="/home/appuser/.local/bin:${PATH}"
-
-# To install pip package installer for python
-RUN wget https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm get-pip.py
-
-# To clone custom HR-VITON repository if CLONE_REPO=1
-ARG CLONE_REPO=1
-RUN if [ '${CLONE_REPO}' = 1 ]; then git clone https://github.com/sohaibwaheedgithub/HR-VITON-CUSTOM.git HR-VITON-Custom; fi
-
-# To change working dir to HR-VITON-Custom
-WORKDIR /home/appuser/HR-VITON-Custom
-
-# To install requirements
+RUN apt update && apt install -y software-properties-common
+RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin
+RUN mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-600
+RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/3bf863cc.pub
+RUN add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/ /"
+RUN apt-get update
+RUN apt-get install -y libcudnn8
+RUN apt-get install -y libcudnn8-dev
+RUN apt-get install -y kmod
+RUN apt-get update
+RUN apt-get install -y nvidia-cuda-toolkit --fix-missing
+RUN apt-get update && apt-get install -y ca-certificates python3-opencv git
+RUN pip install gdown
+RUN gdown 1-Fl0VggeQVqD7yGBPIFLpmbbNGlgknIw -O /var/ 
+RUN dpkg -i /var/cudnn-local-repo-ubuntu2204-8.9.7.29_1.0-1_amd64.deb
+WORKDIR /var/cudnn-local-repo-ubuntu2204-8.9.7.29
+RUN cp /var/cudnn-local-repo-ubuntu2204-8.9.7.29/cudnn-local-08A7D361-keyring.gpg /usr/share/keyrings/
+RUN apt-get install -y libcudnn8=8.9.7.29-1+cuda12.2 --allow-downgrades && \
+apt-get install -y libcudnn8-dev=8.9.7.29-1+cuda12.2 --allow-downgrades && \
+apt-get install -y libcudnn8-samples=8.9.7.29-1+cuda12.2 --allow-downgrades && \
+export LIBRARY_PATH=/usr/lib/cuda/nvvm/libdevice:$LIBRARY_PATH && \
+export XLA_FLAGS=--xla_gpu_cuda_data_dir=/usr/lib/cuda
+WORKDIR /home/root
+ARG CLONE_REPO="0"
+RUN if [ "${CLONE_REPO}" = "1" ]; then git clone https://github.com/sohaibwaheedgithub/HR-VITON-CUSTOM.git HR-VITON-Custom; fi
+WORKDIR /home/root/HR-VITON-Custom
 RUN pip install -r requirements.txt
-
-# Downloading model checkpoints from google drive
-RUN mkdir models
-WORKDIR /models
