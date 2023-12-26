@@ -3,5 +3,5 @@ tensorflow_addons==0.18.0
 tqdm==4.66.1
 keras==2.8.0
 numpy==1.24.4
-matplotlib==3.3.3
+matplotlib==3.7
 gdown
