@@ -30,6 +30,6 @@ export LIBRARY_PATH=/usr/lib/cuda/nvvm/libdevice:$LIBRARY_PATH && \
 export XLA_FLAGS=--xla_gpu_cuda_data_dir=/usr/lib/cuda
 WORKDIR /home/root
 ARG CLONE_REPO="0"
-RUN if [ "${CLONE_REPO}" = "1" ]; then git clone https://github.com/sohaibwaheedgithub/HR-VITON-CUSTOM.git HR-VITON-Custom; fi
+RUN if [ "${CLONE_REPO}" = "2" ]; then git clone https://github.com/sohaibwaheedgithub/HR-VITON-CUSTOM.git HR-VITON-Custom; fi
 WORKDIR /home/root/HR-VITON-Custom
 RUN pip install -r requirements.txt
